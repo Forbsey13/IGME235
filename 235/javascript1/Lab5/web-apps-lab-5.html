@@ -40,13 +40,21 @@
 <script>
 "use strict";
 
-let chooseButton = document.querySelector(".colorGroup");
-let printInfo = document.querySelector("info");
+let radioVar = document.querySelectorAll(`input[name="colorGroup"]`);
+let submitButton = document.getElementById(`colorButton`);
+let changeInfo = document.getElementById(`info`);
+let currentColor = ``;
 
-chooseButton.addEventListener("change", (event) => {
-    printInfo.textContent = `You have selected "${currentButton}"`;
-});
+radioVar.forEach(radio => {
+	radio.addEventListener(`click`, () => {
+		let currentColor = radio.value;
+		changeInfo.innerHTML = `You have selected "${currentColor}"!`;
+	})
+})
 
+submitButton.addEventListener(`click`, () => {
+	changeInfo.innerHTML = `Your FINAL CHOICE is "${currentColor}"!`;
+})
 
 </script>
 </body>
