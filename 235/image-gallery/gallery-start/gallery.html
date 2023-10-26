@@ -9,6 +9,7 @@
 		  color: #333;
 		  background-color: #fff;
 		  margin: 1em 10%;
+		  text-align: center;
 		}
 		
 		#main {
@@ -38,6 +39,8 @@
 		
 		ul {
 		  padding: 0;
+		  display: flex;
+		  justify-content: center;
 		}
 		
 		li {
@@ -66,22 +69,33 @@
 </head>
 <body>
   <section id="main">
-      <h1>Snapshots</h1>
+      <h1>Image Gallery</h1>
       <ul>
-        <li><span data-image="cassie.jpg" title="A fireworks display">Cassie</span></li>
-        <li><span data-image="seal.jpg" title="A cup of black coffee">Seal</span></li>
-        <li><span data-image="wolf.jpg" title="A red, red rose">Wolf</span></li>
-        <li><span data-image="eagle.jpg" title="The famous clock">Eagle</span></li>
+        <li><span data-image="cassie.jpg" title="A cute dog">Cassie</span></li>
+        <li><span data-image="seal.jpg" title="A happy seal">Seal</span></li>
+        <li><span data-image="wolf.jpg" title="A gorgeous wolf">Wolf</span></li>
+        <li><span data-image="eagle.jpg" title="The regal eagle">Eagle</span></li>
       </ul>
       <div id="imagewrapper">
         <img id="placeholder" src="images/placeholder.gif" alt="my image gallery" />
       </div>
        <p id="description">Choose an image.</p>
      <footer>
-        <p>For IGME-230 Web Site Design & Implementation</p>
+        <p>For IGME-235 Web Site Design & Implementation</p>
      </footer>
     </section>
      <script>
+		const allImages = document.querySelectorAll(`span`);
+		const currentImage = document.getElementById(`placeholder`);
+
+		for (let i = 0; i < allImages.length;i++) {
+			allImages[i].addEventListener(`click`, () => {
+				let imgSrc = allImages[i].getAttribute(`data-image`);
+				currentImage.src = `images/${imgSrc}`;
+				document.getElementById(`description`).textContent = allImages[i].title;
+			})
+		}
+
 	/*
 	The name of the image is stored in the data-image (custom data) attribute of each
 	span. In JavaScript we access these custom data properties using the .dataset 
