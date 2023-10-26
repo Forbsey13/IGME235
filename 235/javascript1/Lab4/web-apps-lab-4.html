@@ -32,33 +32,31 @@
 let colors = ["Black","White","Teal","Turqoise","Grey"];
 let foods = ["Hibachi","Fried Rice","Steak","Hamburger","Wings"]; 
 
-function createList(listElement,array){
+function createList (listElement,array = ["puppydogs","butterflies","lollipops"]) {
     for (let i = 0;i < array.length;i++){
         let newLi = document.createElement("li");
         newLi.textContent = array[i];
-        listElement.append(newLi);
+        listElement.appendChild(newLi);
     }
 }
 
-createList("colorList","colors");
-createList("foodsList","foods");
-
-Array.prototype = ["puppydogs", "butterflies", "lollipops"];
+createList(colorsList,colors);
+createList(foodsList,foods);
 
 let links = {
-	"RIT": "http://www.rit.edu",
-	"RWAG" : "https://www.facebook.com/RWAGclub",
-	"New Media Club" : "http://newmediaclub.cias.rit.edu"
-}
-let newLinks = document.getElementById("linksList");
-for (let key in links){
-	let newLiItem= document.createElement("li");
-	let newLink = document.createElement("a");
-	newLink = links[key];
-	newLink.textContent = key;
-	newLiItem.appendChild(newLink);
-	newLinks.appendChild(newLiItem);
-}
+        "RIT": "http://www.rit.edu",
+        "RWAG" : "https://www.facebook.com/RWAGclub",
+        "New Media Club" : "http://newmediaclub.cias.rit.edu"
+	}
+    let newLinks = document.getElementById("linksList");
+    for (let key in links) {
+        let newLiItem = document.createElement("li");
+        let newLink = document.createElement("a");
+        newLink.href = links[key];
+        newLink.textContent = key;
+        newLiItem.appendChild(newLink);
+        newLinks.appendChild(newLiItem);
+    }
 
 </script>
 </body>
