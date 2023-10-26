@@ -45,33 +45,20 @@ createList("foodsList","foods");
 
 Array.prototype = ["puppydogs", "butterflies", "lollipops"];
 
-// Optional - can you figure out how to pull both the key AND the value
-// from the `links` object literal?
 let links = {
 	"RIT": "http://www.rit.edu",
 	"RWAG" : "https://www.facebook.com/RWAGclub",
 	"New Media Club" : "http://newmediaclub.cias.rit.edu"
 }
-
-// for (const newLink in links) {
-// 	let newLi = document.createElement("li");
-//     newLi = newLink;
-// 	let newA = document.createElement("a");
-//     newA.href = links.newLi;
-
-
-	// newLi.innerHTML =
-	// if (Object.hasOwnProperty.call(object, key)) {
-	// 	let newLi = document.createElement("li");
-	// 	newLi.innerHTML = links.
-	// 	links.{"Steam"} = links["https://store.steampowered.com/"];
-	// }
-// }
-
-// let links = {
-// 	"Steam": "https://store.steampowered.com/",
-// 	"Youtube": "https://www.youtube.com/",
-// 	"Amazon": "https://www.amazon.com/ref=nav_logo"}
+let newLinks = document.getElementById("linksList");
+for (let key in links){
+	let newLiItem= document.createElement("li");
+	let newLink = document.createElement("a");
+	newLink = links[key];
+	newLink.textContent = key;
+	newLiItem.appendChild(newLink);
+	newLinks.appendChild(newLiItem);
+}
 
 </script>
 </body>
