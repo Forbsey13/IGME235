@@ -1,0 +1,17 @@
+hgroup {
+    font-family: sans-serif;
+}
+
+hr {
+    color: rgb(0, 136, 181);
+}
+
+blockquote {
+    background-color: lightskyblue;
+    padding: 2rem;
+}
+
+img {
+    width: 420px;
+    height: auto;
+}

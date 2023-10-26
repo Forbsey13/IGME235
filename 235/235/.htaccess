@@ -1,0 +1,3 @@
+ErrorDocument 404 /waf1035/235/error/error.html
+
+DirectoryIndex noterror.html 

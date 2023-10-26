@@ -1,0 +1,268 @@
+* {
+    box-sizing: border-box; 
+}
+body {
+    margin: 3rem;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+#allInfo {
+    display: grid;
+    grid-template-areas: "nav" "tOI" "headerPicture" "textbelow" "mainText" "des";
+}
+@media screen and (min-width: 900px) {
+    #allInfo {
+        display: grid;
+        grid-template-areas:
+        "nav nav nav nav"
+        "tOI tOI tOI tOI"
+        "headerPicture headerPicture headerPicture headerPicture"
+        "headerPicture textbelow textbelow headerPicture"
+        "mainText mainText mainText mainText"
+        "des des des des";
+    }
+}
+@media screen and (max-width: 760px) {
+    #allInfo {
+        display: grid;
+        grid-template-areas: 
+        "nav"
+        /* "tOI" */
+        "headerPicture" 
+        "textbelow" 
+        "mainText"
+        "des";
+    }
+}
+
+#navbar{
+    grid-area: nav;
+    grid-template-areas: "CP GH LI GIT";
+    background-color: rgb(20, 20, 20);
+    display: flex;
+    justify-content: space-evenly;
+}
+#CP {
+    grid-area: CP;
+    display: flex;
+}
+#GH {
+    grid-area: GH;
+    display: flex;
+}
+#LI {
+    grid-area: LI;
+    display: flex;
+}
+#Git {
+    grid-area: Git;
+    display: flex;
+}
+
+#textOverImage {
+    grid-area: tOI;
+    grid-template-areas: "headerPicture tC tC headerPicture";
+    display: inline-block;
+    width: auto;
+    height: auto;
+    position: relative;
+    margin: auto;
+}
+#textCont {
+    grid-area: tC;
+    grid-template-areas: "texthead1 texthead2";
+    display: flex;
+    justify-content: space-between;
+    justify-content: center;
+}
+#texthead1 {
+    grid-area: texthead1;
+    position: absolute;
+    background-color: teal;
+    color: white;
+    padding: .8em;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    margin-top: -.5vh;
+    margin-right: 30vw;
+}
+#texthead2 {
+    grid-area: texthead2;
+    position: absolute;
+    background-color: teal;
+    color: white;
+    padding: .8em;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    margin-top: -.5vh;
+    margin-left: 30vw;
+}
+#headerPicture {
+    grid-area: headerPicture;
+    width: auto;
+    height: auto;
+}
+
+#textbelow{
+    grid-template-areas: 
+    "h1A h1B";
+    grid-area: textbelow;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 20vw;
+    margin-right: 20vw;
+}
+#h1A{
+    grid-area: h1A;
+    color: whitesmoke;
+    display: flex;
+}
+#h1B {
+    grid-area: h1B;
+    color: teal;
+    display: flex;
+}
+
+#mainText {
+    grid-area: mainText;
+    font-family: 'Average', serif;
+    display: grid;
+    grid-template-areas:
+    "t1 t2 t3 t4"
+    "t1 t2 t3 t5";
+    text-align: center;
+}
+#t1 {
+    grid-area: t1;
+    padding: 1em;
+}
+#t2 {
+    grid-area: t2;
+    padding: 1em;
+}
+#t3 {
+    grid-area: t3;
+    padding: 1em;
+}
+#t4 {
+    grid-area: t4;
+    background-color: rgb(0, 87, 87);
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+#t5 {
+    grid-area: t5;
+    background-color: rgb(90, 90, 90);
+    padding: 1em;
+    text-align: center;
+}
+
+#design {
+    grid-area: des;
+    margin: 1em;
+    width: auto;
+    height: auto;
+}
+
+a {
+    color: white;
+}
+a:visited {
+    color: lightgray;
+    text-decoration: underline;
+}
+a:hover {
+    color:rgb(150, 150, 150);
+    text-decoration: underline;
+}
+a:focus {
+    text-decoration: underline;
+}
+a:active {
+    color: lightgray;
+}
+
+
+
+
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+  
+  /* Hide the images by default */
+  .mySlides {
+    display: none;
+  }
+  
+  /* Next & previous buttons */
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  
+  /* Caption text */
+  .text {
+    color: white;
+    font-size: 20px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 18px;
+    width: 100%;
+    text-align: right;
+  }
+  
+  /* The dots/bullets/indicators */
+  .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+  
+  .active, .dot:hover {
+    background-color: #717171;
+  }
+  
+  /* Fading animation */
+  .fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+  @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+  }

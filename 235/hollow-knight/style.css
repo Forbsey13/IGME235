@@ -1,0 +1,21 @@
+h1 {
+    font-size: 55px;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;    
+}
+
+blockquote {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(40, 40, 40);
+    padding: 2rem;
+}
+
+img {
+    width: 440px;
+    height: auto;
+}

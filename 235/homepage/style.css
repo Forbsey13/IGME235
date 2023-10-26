@@ -1,0 +1,66 @@
+*{
+    background-color: rgb(20, 20, 20);
+    text-align: center;
+    font-family: 'Average', serif;;
+}
+
+p {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    margin-left: 10em;
+    margin-right: 10em;
+    padding: 2em;
+    background-color: rgb(30,30,30);
+}
+
+hr{
+    width: 50%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+body{
+    color: white;
+}
+
+img{
+    width: 250px;
+    height: auto;
+}
+
+a {
+    color: rgb(1, 150, 150);
+    text-decoration: none;
+    display:flex;
+    flex-direction: row;
+    flex-flow:column;
+    margin-top: 1rem;
+}
+a:visited{
+    text-decoration: underline;
+}
+a:hover{
+    color: rgb(0, 95, 95);
+    text-decoration: underline;
+}
+a:focus{
+    text-decoration: underline;
+}
+a:active{
+    color: rgb(0, 95, 95);
+}
+
+.projectList{
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 15rem;
+    margin-right: 15rem;
+}
+
+.hwList{
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 13rem;
+    margin-right: 13rem;
+}
