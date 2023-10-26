@@ -47,7 +47,7 @@ let currentColor = ``;
 
 radioVar.forEach(radio => {
 	radio.addEventListener(`click`, () => {
-		let currentColor = radio.value;
+		currentColor = radio.value;
 		changeInfo.innerHTML = `You have selected "${currentColor}"!`;
 	})
 })
