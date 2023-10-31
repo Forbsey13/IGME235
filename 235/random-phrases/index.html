@@ -1,18 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Random Hollow Knight Phrases</title>
 </head>
 <body>
-    <h1>Random Hollow Knight Phrases</h1>
+    <div class="main">
+        <div class="nameArea">
+            <h1 id="name"></h1>
+        </div>
+        <div class="imageArea">
+            <img id="image" src="" alt="">
+        </div>
+        <div class="quoteArea">
+            <p id="quote"></p>
+        </div>
+        <div class="holdButton">
+            <div id="button">
+                <button>Generate Character</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright 2023 Will Forbes</p>
+    </footer>
 
     <script>
         "use strict";
+        const characters = {
+            hornet: {
+                charName: "Hornet",
+                charQuote: "GEK TUU",
+                charImage: "Images/Hornet_GEKTUU.png",
+                textColor: "#c74f43"
+            },
+            elderBug: {
+                charName: "Elder Bug",
+                charQuote: "Ho there, traveller. I'm afraid there's only me left to offer welcome. Our town's fallen quiet you see.",
+                charImage: "Images/ElderBug.png",
+                textColor: "#2f2121"
+            },
+            mantisLords: {
+                charName: "Mantis Lords",
+                charQuote: "...Honour from one of its kind...",
+                charImage: "Images/MantisLords",
+                textColor: "#815b96"
+            },
+            quirrel: {
+                charName: "Quirrel",
+                charQuote: "Hallownest is perfect for vigilant explorers like us. So tense and thrilling. In this place, you're either alert or you're dead.",
+                charImage: "Images/Quirrel.png",
+                textColor: "#533b35"
+            },
+            paleKing: {
+                charName: "Pale King",
+                charQuote: "...No cost too great...",
+                charImage: "Images/PaleKing.png",
+                textColor: "#b7444c"
+            }
+        };
 
+        // Get each element to be modified
+        let nameSection = document.getElementById("name");
+        let imageSection = document.getElementById("image");
+        let quoteSection = document.getElementById("quote");
+        let button = document.querySelector('button');
 
+        // Function to change the character
+        function changeCharacter() {
+            const characterKey = Object.keys(characters);
+            const random = Math.floor(Math.random() * characterKey.length);
+            const selectedCharacter = characterKey[random];
+            const character = characters[selectedCharacter];
+
+            quoteSection.textContent = `"${character.charQuote}"`;
+            nameSection.textContent = character.charName;
+            nameSection.style.color = character.textColor;
+            imageSection.src = character.charImage;
+            imageSection.alt = `${character.charName} Image`;
+        }
+
+        // Event listeners for the button and DOM
+        button.addEventListener('click', changeCharacter);
+        document.addEventListener('DOMContentLoaded', changeCharacter);
     </script>
 </body>
 </html>
