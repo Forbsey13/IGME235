@@ -38,37 +38,37 @@
                 charName: "Hornet",
                 charQuote: "GEK TUU",
                 charImage: "Images/Hornet_GEKTUU.png",
-                textColor: "#c74f43"
+                textColor: "#00b300"
             },
             elderBug: {
                 charName: "Elder Bug",
                 charQuote: "Ho there, traveller. I'm afraid there's only me left to offer welcome. Our town's fallen quiet you see.",
                 charImage: "Images/ElderBug.png",
-                textColor: "#2f2121"
+                textColor: "#193180"
             },
             mantisLords: {
                 charName: "Mantis Lords",
                 charQuote: "...Honour from one of its kind...",
-                charImage: "Images/MantisLords",
-                textColor: "#815b96"
+                charImage: "Images/MantisLords.png",
+                textColor: "#1d9980"
             },
             quirrel: {
                 charName: "Quirrel",
                 charQuote: "Hallownest is perfect for vigilant explorers like us. So tense and thrilling. In this place, you're either alert or you're dead.",
                 charImage: "Images/Quirrel.png",
-                textColor: "#533b35"
+                textColor: "#d6d300"
             },
             paleKing: {
                 charName: "Pale King",
                 charQuote: "...No cost too great...",
                 charImage: "Images/PaleKing.png",
-                textColor: "#b7444c"
+                textColor: "#ffffff"
             }
         };
 
         // Get each element to be modified
         let nameSection = document.getElementById("name");
-        let imageSection = document.getElementById("image");
+        let imgSection = document.getElementById("image");
         let quoteSection = document.getElementById("quote");
         let button = document.querySelector('button');
 
@@ -82,8 +82,8 @@
             quoteSection.textContent = `"${character.charQuote}"`;
             nameSection.textContent = character.charName;
             nameSection.style.color = character.textColor;
-            imageSection.src = character.charImage;
-            imageSection.alt = `${character.charName} Image`;
+            imgSection.src = character.charImage;
+            imgSection.alt = `${character.charName} Image`;
         }
 
         // Event listeners for the button and DOM
