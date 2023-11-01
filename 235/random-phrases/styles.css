@@ -13,11 +13,21 @@ footer {
     justify-content: center;
 }
 
+.imageArea {
+    display: flex;
+    justify-content: center;
+}
+
 button{
     background-color: white;
     color: black;
     background-color: white;
     border-radius: 20px;
+    padding: 20px 30px;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0px auto;
+    display: block;
 }
 
 button:hover {
@@ -33,21 +43,31 @@ button:active {
 }
 
 /*Mobile*/
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 900px) {
     .main {
         background-color: rgb(45, 45, 45);
-        margin: 0% auto;
-        display: flex;
+        margin: 2%;
+        display: block;
         justify-content: center;
-        width:480px;
-        height: auto;
+        align-items: center;
     }
 
     .nameArea {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 25px;
+        font-size: 20px;
+    }
+
+    .quoteArea {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        top: 15%;
+        position: absolute;
+        font-size: 15px;
+        width: 90%;
     }
 
     .imageArea {
@@ -55,18 +75,9 @@ button:active {
         justify-content: center;
     }
 
-    .quoteArea {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 10%;
-        font-size: 30px;
-        padding: 0% 3% 0px 5%;
-    }
-
-    img {
-        width: auto;
-        height: 5vh;
+    #image {
+        width: 100%;
+        height: auto;
     }
 
     .holdButton {
@@ -74,17 +85,14 @@ button:active {
         justify-content: center;
         align-items: center;
         background-color: rgb(45, 45, 45);
-        /* height: 15vh; */
         margin: 0 auto;
+        padding: 3%;
     }
 
-    button {
-        padding: 20px 30px;
-        font-size: 24px;
-        cursor: pointer;
-        margin: 2% auto;
-        display: block;
-    }
+     button {
+        padding: 10px 20px;
+        font-size: 18px;
+    } 
 }
 
 /*Desktop*/
@@ -104,17 +112,11 @@ button:active {
         justify-content: center;
         align-items: center;
         font-size: 30px;
-        padding: -3px;
-    }
-
-    .imageArea {
-        display: flex;
-        justify-content: center;
+        /* padding: -3px; */
     }
 
     .quoteArea {
         display: flex;
-        grid-area: quoteArea;
         font-size: 25px;
         justify-content: center;
         align-items: center;
@@ -124,7 +126,7 @@ button:active {
         width: 60vw;
     }
 
-    img {
+    #image {
         width: 100%;
         height: auto;
     }
@@ -135,13 +137,5 @@ button:active {
         margin: 0% auto;
         padding: 3%;
         justify-content: center;
-    }
-
-    button {
-        padding: 20px 30px;
-        font-size: 24px;
-        cursor: pointer;
-        margin: 0px auto;
-        display: block;
     }
 }

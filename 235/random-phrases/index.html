@@ -66,13 +66,13 @@
             }
         };
 
-        // Get each element to be modified
+        // Get Elements
         let nameSection = document.getElementById("name");
         let imgSection = document.getElementById("image");
         let quoteSection = document.getElementById("quote");
         let button = document.querySelector('button');
 
-        // Function to change the character
+        // Change Character
         function changeCharacter() {
             const characterKey = Object.keys(characters);
             const random = Math.floor(Math.random() * characterKey.length);
@@ -86,7 +86,7 @@
             imgSection.alt = `${character.charName} Image`;
         }
 
-        // Event listeners for the button and DOM
+        // Event Listeners
         button.addEventListener('click', changeCharacter);
         document.addEventListener('DOMContentLoaded', changeCharacter);
     </script>
