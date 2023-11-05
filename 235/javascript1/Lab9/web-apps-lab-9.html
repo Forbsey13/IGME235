@@ -56,7 +56,8 @@ nameField.onchange = e=> { localStorage.setItem(nameKey, e.target.value); };
 colorSelect.onchange = e=> { 
         const selectedColor = e.target.value;
         document.body.style.backgroundColor = selectedColor;
-        localStorage.setItem(colorKey, selectedColor); };
+        localStorage.setItem(colorKey, selectedColor); 
+};
 
 </script>
 </html>

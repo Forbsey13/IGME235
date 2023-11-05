@@ -52,9 +52,14 @@ let sortedByYear = cars.sort((a, b) => a.year - b.year);
  or as a "one-liner" by chaining the method calls.
 */
 
-let newerYearsOnly = cars
-            .map(car => car.year)
-            .filter(year => Number.isInteger(year) && year >= 2010);
+let onlyYears = function(car)
+{
+	if(car.year >= 2010) {
+    	return car.year;
+	}
+}
+
+let newerYearsOnly = cars.map(onlyYears).filter(Number.isInteger);
 
 debugger;
 </script>
