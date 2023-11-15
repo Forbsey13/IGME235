@@ -1,0 +1,32 @@
+.showcase {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cursorChange {
+    cursor: pointer;
+}
+
+ #main{
+    display: grid;
+    grid-template-areas: 
+    "head head head"
+    "char1 vs char2";
+}
+
+.head{
+    grid-area: head;
+    text-align: center;
+}
+
+#char1{
+    grid-area: char1;
+}
+
+#VS{
+    grid-area: vs;
+}
+
+#char2{
+    grid-area: char2;
+}
