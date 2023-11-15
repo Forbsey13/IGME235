@@ -6,12 +6,12 @@ let pokeColor;
 
 const searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
-    const resultsElement = document.getElementById("results");
+    const resultsElement = document.getElementById("results2");
     resultsElement.innerHTML = "";
     handleSearch();
 });
 
-const searchInput = document.querySelector("#searchterm");
+const searchInput = document.querySelector("#searchterm2");
 searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         handleSearch();
@@ -19,7 +19,7 @@ searchInput.addEventListener("keydown", function (event) {
 });
 
 function handleSearch() {
-    const searchInput = document.querySelector("#searchterm");
+    const searchInput = document.querySelector("#searchterm2");
     const searchTerm = searchInput.value.trim();
 
     if (searchTerm !== "") {
@@ -59,7 +59,7 @@ async function getPokemon(pokemon) {
 }
 
 function clearResults() {
-    const results = document.getElementById("results");
+    const results = document.getElementById("results2");
 
     if (results) {
         const existingCanvas = results.querySelector("canvas");
@@ -106,9 +106,9 @@ function getSpeciesInfo(data) {
 }
 
 function createInfographic(pokeMap, speciesMap) {
-    const results = document.getElementById("results");
+    const results = document.getElementById("results2");
     const infoMap = new Map([...pokeMap, ...speciesMap]);
-
+    
     results.classList.add('infographic');
 
     const elementTypes = [

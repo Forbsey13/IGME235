@@ -1,32 +1,57 @@
-.showcase {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .cursorChange {
     cursor: pointer;
 }
 
- #main{
+header{
     display: grid;
     grid-template-areas: 
     "head head head"
-    "char1 vs char2";
+    ". vs ."
+    "st1 vs st2"
+    ". vs ."
+    ". press .";
+    margin: 2% 8%;
+    text-align: center;
 }
-
-.head{
+#head{
     grid-area: head;
     text-align: center;
 }
-
-#char1{
-    grid-area: char1;
+#searchterm {
+    grid-area: st1;
 }
-
-#VS{
+#searchterm2{
+    grid-area: st2;
+}
+#VS {
     grid-area: vs;
+    text-align: center;
+    font-size: 3vh; 
+    /* margin: 3% 0%; */
+}
+#search {
+    grid-area: search;
+    margin: 3% 0%;
+    top: 50%;
+    left: 50%;
+    width: 20vw;
+    height: 5vh;
+    border-radius: 20px;
+}
+#press{
+    grid-area: press;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#char2{
-    grid-area: char2;
+#pokemans {
+    display: grid;
+    grid-template-areas: "r1 r2";
+}
+#results {
+    grid-area: r1;
+}
+#results2 {
+    grid-area: r2;
 }
