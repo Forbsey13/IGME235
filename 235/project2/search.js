@@ -119,6 +119,14 @@ function getSpeciesInfo(data) {
     return pokemonMap;
 }
 
+function tempStats(response){
+    let pokeStats = document.querySelector("#pokeStats");
+    pokeStats.innerHTML = "Base Stats:<br>";
+    response.stats.forEach(stat => {
+        pokeStats.innerHTML += '${stat.stat.name}: ${stat.base_stat}<br>';
+    });
+}
+
 function createInfographic(pokeMap, speciesMap, chosenDiv) {
     console.log(chosenDiv);
 
@@ -139,8 +147,8 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: " },
         { type: "p", key: "Weight", prefix: "Weight: " },
         { type: "p", key: "Height", prefix: "Height: " },
-        { type: "p", key: "EggGroup", prefix: "Egg Group: " },
-        { type: "p", key: "Color", prefix: "Color: " }
+        // { type: "p", key: "EggGroup", prefix: "Egg Group: " },
+        // { type: "p", key: "Color", prefix: "Color: " }
     ];
 
     elementTypes.forEach(({ type, key, prefix = "" }) => {
@@ -154,6 +162,7 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
     });
 
     // createStatGraph(infoMap.get("Stats"));
+    tempStats(infoMap.get("Stats"));
 
     let saveButton = document.createElement("button");
     saveButton.id = "save";
@@ -165,7 +174,7 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
     });
 }
 
-
+/*
 function createStatGraph(statsData) {
     const statNameMap = {
         "hp": "HP",
@@ -182,7 +191,7 @@ function createStatGraph(statsData) {
 
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
-    
+
     const results = document.getElementById("results");
 
     let div = document.createElement("div");
@@ -216,7 +225,7 @@ function createStatGraph(statsData) {
         }
     });
 }
-
+*/
 
 function savePokemon(id) {
 
