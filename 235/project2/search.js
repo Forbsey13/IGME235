@@ -19,12 +19,26 @@ searchInput.addEventListener("keydown", function (event) {
 });
 
 function handleSearch() {
-    const searchInput = document.querySelector("#searchterm");
-    const searchTerm = searchInput.value.trim();
+    const search1 = document.querySelector("#searchterm"); 
+    const search2 = document.querySelector("#searchterm2");
+    const term1 = search1.value.trim();
+    const term2 = search2.value.trim();
 
-    if (searchTerm !== "") {
-        const pokemon = searchTerm.toLowerCase();
-        getPokemon(pokemon);
+    if (search1 !== "" && search2 !== "") {
+        pkm1 = term1.toLowerCase();
+        pkm2 = term2.toLowerCase();
+
+        getPokemon(pkm1,"results");
+        getPokemon(pkm2,"results2");
+    }
+    else if (search1 == "") {
+        console.log(`An error occurred trying to fetch search 1 data from ${poke_URL}`);
+    }
+    else if (search2 == "") { 
+        console.log(`An error occurred trying to fetch search 2 data from ${poke_URL}`);
+    }
+    else { 
+        console.log(`An error occurred trying to fetch both search data from ${poke_URL}`);
     }
 }
 
@@ -32,7 +46,7 @@ function formatString(str) {
     return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
-async function getPokemon(pokemon) {
+async function getPokemon(pokemon, correctDiv) {
     try {
         const pokeSpecies_response = await fetch(`${pokeSpecies_URL}${pokemon}`);
         if (pokeSpecies_response.ok) {
@@ -42,10 +56,10 @@ async function getPokemon(pokemon) {
             const poke_response = await fetch(`${poke_URL}${dexNumber}`);
             if (poke_response.ok) {
                 const poke_data = await poke_response.json();
-                clearResults();
+                clearResults(correctDiv);
                 const pokemonInfo = getPokemonInfo(poke_data);
                 const speciesInfo = getSpeciesInfo(pokeSpecies_data);
-                createInfographic(pokemonInfo, speciesInfo);
+                createInfographic(pokemonInfo, speciesInfo, correctDiv);
 
             } else {
                 console.log(`An error occurred trying to fetch data from ${poke_URL}`);
@@ -58,8 +72,8 @@ async function getPokemon(pokemon) {
     }
 }
 
-function clearResults() {
-    const results = document.getElementById("results");
+function clearResults(chosenDiv) {
+    const results = document.getElementById(chosenDiv);
 
     if (results) {
         const existingCanvas = results.querySelector("canvas");
@@ -105,8 +119,13 @@ function getSpeciesInfo(data) {
     return pokemonMap;
 }
 
-function createInfographic(pokeMap, speciesMap) {
-    const results = document.getElementById("results");
+function createInfographic(pokeMap, speciesMap, chosenDiv) {
+    console.log(chosenDiv);
+
+    const results = document.getElementById(chosenDiv);
+
+    console.log(results);
+
     const infoMap = new Map([...pokeMap, ...speciesMap]);
 
     results.classList.add('infographic');
@@ -146,7 +165,7 @@ function createInfographic(pokeMap, speciesMap) {
     });
 }
 
-/*
+
 function createStatGraph(statsData) {
     const statNameMap = {
         "hp": "HP",
@@ -163,6 +182,7 @@ function createStatGraph(statsData) {
 
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
+    
     const results = document.getElementById("results");
 
     let div = document.createElement("div");
@@ -196,7 +216,7 @@ function createStatGraph(statsData) {
         }
     });
 }
-*/
+
 
 function savePokemon(id) {
 

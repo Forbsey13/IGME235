@@ -54,4 +54,5 @@ header{
 }
 #results2 {
     grid-area: r2;
+    text-align: right;
 }
