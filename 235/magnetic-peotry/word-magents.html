@@ -4,138 +4,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <title>Word Magnets</title>
-    <script>
-        // Yes the script tag is in the head section, leave it here.
-        { // ES6 Block Scope
+    <!DOCTYPE html>
+    <html lang="en">
 
-            // 5
-            let selectedElement = null;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>Word Magnets</title>
+        <script>
+            // Yes the script tag is in the head section, leave it here.
+            { // ES6 Block Scope
 
-            //6
-            const TRAY_POSITION = { x: 50, y: 500 };
-            const MAX_WORD_LEFT = 770;
-            const LINE_HEIGHT = 30;
-            const WORD_MARGIN = 10;
-            const WORD_SPACING = 8;
-            const MAX_Z_INDEX = 1000;
+                // 5
+                let selectedElement = null;
 
-            // 1
-            window.onload = function() {
-                positionWords();
-                setupStartingPoem();
-                setupDragging();
-            }
+                //6
+                const TRAY_POSITION = { x: 50, y: 500 };
+                const MAX_WORD_LEFT = 770;
+                const LINE_HEIGHT = 30;
+                const WORD_MARGIN = 10;
+                const WORD_SPACING = 8;
+                const MAX_Z_INDEX = 1000;
 
-            // 2
-            function setupStartingPoem() {
-                setPosition(getWord("gibber"), 150, 100);
-                setPosition(getWord("ing"), 210, 100);
-                setPosition(getWord("Professor"), 253, 103);
-                setPosition(getWord("meep"), 350, 100);
-                setPosition(getWord("s"), 390, 100);
-
-                setPosition(getWord("disagreeable"), 200, 162);
-                setPosition(getWord("ly"), 290, 162);
-                setPosition(getWord("eternal"), 330, 160);
-
-                setPosition(getWord("eldritch"), 260, 230);
-                setPosition(getWord("cyclopean"), 270, 280);
-                setPosition(getWord("horror"), 275, 330);
-            }
-
-            // 3
-            function setPosition(word, wordLeft, wordTop) {
-                word.style.left = wordLeft + "px";
-                word.style.top = wordTop + "px";
-            }
-
-            // 4
-            function getWord(text) {
-                let allWords = document.querySelectorAll(".word");
-                for (let word of allWords) {
-                    if (word.textContent == text) {
-                        return word; // returns matched word, also breaks out of loop
-                    }
-                }
-                // no match - the function will return undefined
-            }
-
-            // 7
-            function positionWords() {
-                // 8
-                let doMousedown = function(e) {
-                    e.preventDefault();
-                    selectedElement = e.target;
-                    selectedElement.style.zIndex = MAX_Z_INDEX;
-                };
-
-                // 9
-                let allWords = document.querySelectorAll(".word");
-                let wordSpacing = WORD_SPACING;
-                let wordLeft = WORD_MARGIN;
-                let wordTop = TRAY_POSITION.y;
-
-                // 10
-                for (let word of allWords) {
-                    setPosition(word, wordLeft, wordTop)
-                    let wordWidth = word.clientWidth;
-                    wordLeft += wordWidth + wordSpacing;
-                    if (wordLeft >= MAX_WORD_LEFT) {
-                        wordLeft = WORD_MARGIN;
-                        wordTop += LINE_HEIGHT;
-                    }
-
-                    // 11
-                    word.onmousedown = doMousedown;
+                // 1
+                window.onload = function () {
+                    positionWords();
+                    setupStartingPoem();
+                    setupDragging();
                 }
 
-                // make the title words draggable too
-                document.querySelector("#title1").onmousedown = doMousedown;
-                document.querySelector("#title2").onmousedown = doMousedown;
-                document.querySelector("#title3").onmousedown = doMousedown;
-                document.querySelector("#title4").onmousedown = doMousedown;
-                document.querySelector("#title5").onmousedown = doMousedown;
-            } // end function positionwords
+                // 2
+                function setupStartingPoem() {
+                    setPosition(getWord("gibber"), 150, 100);
+                    setPosition(getWord("ing"), 210, 100);
+                    setPosition(getWord("Professor"), 253, 103);
+                    setPosition(getWord("meep"), 350, 100);
+                    setPosition(getWord("s"), 390, 100);
 
-            // 12
-            function setupDragging() {
-                // 13
-                document.onmousemove = function(e) {
-                    e.preventDefault();
-                    if (selectedElement) {
-                        let mousePos = getMousePos(document.body, e);
+                    setPosition(getWord("disagreeable"), 200, 162);
+                    setPosition(getWord("ly"), 290, 162);
+                    setPosition(getWord("eternal"), 330, 160);
 
-                        // adjust position so we drag words from their middl 
-                        mousePos.x -= selectedElement.clientWidth / 2;
-                        mousePos.y -= selectedElement.clientHeight / 2;
+                    setPosition(getWord("eldritch"), 260, 230);
+                    setPosition(getWord("cyclopean"), 270, 280);
+                    setPosition(getWord("horror"), 275, 330);
+                }
 
-                        setPosition(selectedElement, mousePos.x, mousePos.y);
+                // 3
+                function setPosition(word, wordLeft, wordTop) {
+                    word.style.left = wordLeft + "px";
+                    word.style.top = wordTop + "px";
+                }
+
+                // 4
+                function getWord(text) {
+                    let allwords = document.querySelectorAll(".word");
+                    for (let word of allwords) {
+                        if (word.textContent == text) {
+                            return word; // returns matched word, also breaks out of loop
+                        }
                     }
-                };
+                    // no match - the function will return undefined
+                }
 
-                // 14
-                document.onmouseup = function(e) {
-                    if (selectedElement) {
-                        selectedElement.style.zIndex = MAX_Z_INDEX - 1;
+                // 7
+                function positionWords() {
+                    // 8
+                    let doMousedown = function (e) {
+                        e.preventDefault();
+                        selectedElement = e.target;
+                        selectedElement.style.zIndex = MAX_Z_INDEX;
+                    };
+
+                    // 9
+                    let allwords = document.querySelectorAll(".word");
+                    let wordSpacing = WORD_SPACING;
+                    let wordLeft = WORD_MARGIN;
+                    let wordTop = TRAY_POSITION.Y;
+
+                    // 10
+                    for (let word of allwords) {
+                        setPosition(word, wordLeft, wordTop)
+                        let wordWidth = word.clientWidth;
+                        wordLeft += wordWidth + wordSpacing;
+                        if (wordLeft >= MAX_WORD_LEFT) {
+                            wordLeft = WORD_MARGIN;
+                            wordTop += LINE_HEIGHT;
+                        }
+
+                        // 11
+                        word.onmousedown = doMousedown;
                     }
-                    selectedElement = null;
-                };
-            } // end function setupDragging
 
-            // 15
-            /* Helper */
-            function getMousePos(parentElement, event) {
-                let rect = parentElement.getBoundingClientRect();
-                return {
-                    x: event.clientX - rect.left,
-                    y: event.clientY - rect.top
-                };
-            }
-        } // End ES6 Block Scope
-    </script>
-</head>
+                    // make the title words draggable too
+                    document.querySelector("#title1").onmousedown = doMousedown;
+                    document.querySelector("#title2").onmousedown = doMousedown;
+                    document.querySelector("#title3").onmousedown = doMousedown;
+                    document.querySelector("#title4").onmousedown = doMousedown;
+                    document.querySelector("#title5").onmousedown = doMousedown;
+                } // end function positionwords
+
+                // 12
+                function setupDragging() {
+                    // 13
+                    document.onmousemove = function (e) {
+                        e.preventDefault();
+                        if (selectedElement) {
+                            let mousePos = getMousePos(document.body, e);
+
+                            // adjust position so we drag words from their middl 
+                            mousePos.x -= selectedElement.clientWidth / 2;
+                            mousePos.y -= selectedElement.clientHeight / 2;
+
+                            setPosition(selectedElement, mousePos.x, mousePos.Y);
+                        }
+                    };
+
+                    // 14
+                    document.onmouseup = function (e) {
+                        if (selectedElement) {
+                            selectedElement.style.zIndex = MAX_Z_INDEX - 1;
+                        }
+                        selectedElement = null;
+                    };
+                } // end function setupDragging
+
+                // 15
+                /* Helper */
+                function getMousePos(parentElement, event) {
+                    let rect = parentElement.getBoundingClientRect();
+                    return {
+                        x: event.client - rect.left,
+                        y: event.clientY - rect.top
+                    };
+                }
+            } // End ES6 Block Scope
+        </script>
+    </head>
 
 <body>
     <div id="container">
