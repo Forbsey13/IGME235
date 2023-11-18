@@ -161,8 +161,8 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         results.appendChild(element);
     });
 
-    // createStatGraph(infoMap.get("Stats"));
-    tempStats(infoMap.get("Stats"));
+    createStatGraph(infoMap.get("Stats"),chosenDiv);
+    // tempStats(infoMap.get("Stats"));
 
     let saveButton = document.createElement("button");
     saveButton.id = "save";
@@ -174,8 +174,8 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
     });
 }
 
-/*
-function createStatGraph(statsData) {
+
+function createStatGraph(statsData, chosenDiv) {
     const statNameMap = {
         "hp": "HP",
         "attack": "Atk",
@@ -192,7 +192,7 @@ function createStatGraph(statsData) {
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
 
-    const results = document.getElementById("results");
+    const results = document.getElementById(chosenDiv);
 
     let div = document.createElement("div");
     div.id = "stats";
@@ -225,8 +225,12 @@ function createStatGraph(statsData) {
         }
     });
 }
-*/
 
-function savePokemon(id) {
-
+function ApplyStyles(infoMap) {
+    const results = document.getElementById("results");
+    const infoSectionDiv = document.querySelector('.infoSection');
+    const titleSectionDiv = document.querySelector('.titleSection');
+    const aboutSectionDiv = document.querySelector('.aboutSection');
+    const battleSectionDiv = document.querySelector('.battleSection');
+    const graphicsSectionDiv = document.querySelector('.graphicsSection');
 }

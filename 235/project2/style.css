@@ -9,7 +9,7 @@ header{
     ". vs ."
     "st1 vs st2"
     ". vs ."
-    ". press .";
+    "press press press";
     /* margin: 1% 6%; */
     text-align: center;
 }
@@ -40,28 +40,44 @@ button:hover {
     width: 50%;
     height: auto;
 }
+#press{
+    grid-area: press;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-template-areas: "rando search .";
+}
 #search {
     grid-area: search;
-    margin: 6% 0%;
+    margin: 3% 3%;
     top: 50%;
     left: 50%;
     width: 20vw;
     height: 5vh;
     border-radius: 20px;
 }
-#press{
-    grid-area: press;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#randomizer {
+    grid-area: rando;
+    margin: 3% 3%;
+    top: 50%;
+    left: 50%;
+    width: 20vw;
+    height: 5vh;
+    border-radius: 20px;
 }
 
 #pokemans {
     display: grid;
-    grid-template-areas: "r1 r2";
+    grid-template-areas: "r1 TMup r2";
 }
 #results {
     grid-area: r1;
+}
+#theMatchup {
+    grid-area: TMup;
+    display: flex;
+    justify-content: center;
+    /* margin-top: 70%; */
 }
 #results2 {
     grid-area: r2;
@@ -71,4 +87,8 @@ button:hover {
 #pokemans img {
     width: 50%;
     height: auto;
+}
+
+footer {
+    text-align: center;
 }

@@ -18,20 +18,29 @@
         <div id="VS"><img src="images/vs.png"></div>
         <!-- <div id="VS"><img src="images/VSStandard.jpg"></div> -->
         <input id="searchterm2" type="text" size="20" autofocus value="squirtle" spellcheck="false" />
-        <div id="press"><button type="button" id="search">Search</button></div>
+        <div id="press">
+            <button type="button" id="randomizer">Randomizer</button>
+            <button type="button" id="search">Search</button>
+        </div>
     </header>
     <hr>
     <div id="pokemans">
         <div id="results"></div>
+        <div id="theMatchup">
+            <h3>The Matchup</h3>
+            <!-- The visual type matchup -->
+        </div>
         <div id="results2"></div>
     </div>
-    <footer>
+    <!-- <footer>
         <hr>
         <h2>Type Mathup</h2>
 
-    </footer>
+    </footer> -->
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
     <script src="search.js"></script>
+    <script src="save.js"></script>
 </body>
 
 </html>
