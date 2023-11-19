@@ -38,21 +38,21 @@ class Circle extends PIXI.Graphics {
 }
 
 class Bullet extends PIXI.Graphics {
-    constructor(color = 0xFFFFF, x = 0, y = 0) {
+    constructor(color=0xFFFFF, x=0,y=0){
         super();
         this.beginFill(color);
-        this.drawRect(-2, -2, 4, 6);
+        this.drawRect(-2,-2,4,6);
         this.endFill();
         this.x = x;
         this.y = y;
         // variables
-        this.fwd = { x: 0, y: -1 };
+        this.fwd = {x:0, y:-1};
         this.speed = 400;
         this.isAlive = true;
         Object.seal(this);
     }
 
-    move(dt = 1 / 60) {
+    move(dt=1/60){
         this.x += this.fwd.x * this.speed * dt;
         this.y += this.fwd.y * this.speed * dt;
     }

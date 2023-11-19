@@ -378,7 +378,7 @@ function loadSpriteSheet() {
     return textures;
 }
 
-function createExplosion(x, y, frameWidth, frameHeight) {
+function createExplosion(x, y, frameWidth, frameHeight){
     // http://pixijs.download/release/docs/PIXI.AnimatedSprite.html
     // the animation frames are 64x64 pixels
     let w2 = frameWidth / 2;
