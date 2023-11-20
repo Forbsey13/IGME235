@@ -45,7 +45,7 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-template-areas: "rando search .";
+    grid-template-areas: "rando search load";
 }
 #search {
     grid-area: search;
@@ -58,6 +58,15 @@ button:hover {
 }
 #randomizer {
     grid-area: rando;
+    margin: 3% 3%;
+    top: 50%;
+    left: 50%;
+    width: 20vw;
+    height: 5vh;
+    border-radius: 20px;
+}
+#load {
+    grid-area: load;
     margin: 3% 3%;
     top: 50%;
     left: 50%;

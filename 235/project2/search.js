@@ -18,8 +18,17 @@ searchInput.addEventListener("keydown", function (event) {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    localStorage.setItem("FavPokemon", "");
+});
+
+const storageButton = document.querySelector("#load");
+storageButton.addEventListener("click", function () {
+    loadPokemon();
+});
+
 function handleSearch() {
-    const search1 = document.querySelector("#searchterm"); 
+    const search1 = document.querySelector("#searchterm");
     const search2 = document.querySelector("#searchterm2");
     const term1 = search1.value.trim();
     const term2 = search2.value.trim();
@@ -28,16 +37,16 @@ function handleSearch() {
         pkm1 = term1.toLowerCase();
         pkm2 = term2.toLowerCase();
 
-        getPokemon(pkm1,"results");
-        getPokemon(pkm2,"results2");
+        getPokemon(pkm1, "results");
+        getPokemon(pkm2, "results2");
     }
     else if (search1 == "") {
         console.log(`An error occurred trying to fetch search 1 data from ${poke_URL}`);
     }
-    else if (search2 == "") { 
+    else if (search2 == "") {
         console.log(`An error occurred trying to fetch search 2 data from ${poke_URL}`);
     }
-    else { 
+    else {
         console.log(`An error occurred trying to fetch both search data from ${poke_URL}`);
     }
 }
@@ -56,7 +65,7 @@ async function getPokemon(pokemon, correctDiv) {
             const poke_response = await fetch(`${poke_URL}${dexNumber}`);
             if (poke_response.ok) {
                 const poke_data = await poke_response.json();
-                clearResults(correctDiv);
+                clearResults("results","results2");
                 const pokemonInfo = getPokemonInfo(poke_data);
                 const speciesInfo = getSpeciesInfo(pokeSpecies_data);
                 createInfographic(pokemonInfo, speciesInfo, correctDiv);
@@ -72,8 +81,9 @@ async function getPokemon(pokemon, correctDiv) {
     }
 }
 
-function clearResults(chosenDiv) {
+function clearResults(chosenDiv,otherDiv) {
     const results = document.getElementById(chosenDiv);
+    const results2 = document.getElementById(otherDiv);
 
     if (results) {
         const existingCanvas = results.querySelector("canvas");
@@ -83,6 +93,7 @@ function clearResults(chosenDiv) {
     }
 
     results.innerHTML = "";
+    results2.innerHTML = "";
 }
 
 function getPokemonInfo(data) {
@@ -119,7 +130,7 @@ function getSpeciesInfo(data) {
     return pokemonMap;
 }
 
-function tempStats(response){
+function tempStats(response) {
     let pokeStats = document.querySelector("#pokeStats");
     pokeStats.innerHTML = "Base Stats:<br>";
     response.stats.forEach(stat => {
@@ -147,8 +158,6 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: " },
         { type: "p", key: "Weight", prefix: "Weight: " },
         { type: "p", key: "Height", prefix: "Height: " },
-        // { type: "p", key: "EggGroup", prefix: "Egg Group: " },
-        // { type: "p", key: "Color", prefix: "Color: " }
     ];
 
     elementTypes.forEach(({ type, key, prefix = "" }) => {
@@ -161,9 +170,10 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         results.appendChild(element);
     });
 
-    createStatGraph(infoMap.get("Stats"),chosenDiv);
+    // createStatGraph(infoMap.get("Stats"),chosenDiv);
     // tempStats(infoMap.get("Stats"));
 
+    // Save Pokemon
     let saveButton = document.createElement("button");
     saveButton.id = "save";
     saveButton.textContent = "Save";
@@ -174,7 +184,94 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
     });
 }
 
+function savePokemon(id) {
+    if (AlreadySaved(id)) {
+        alert("This Pokemon is already saved!");
+        return;
+    }
 
+    let existingValue = localStorage.getItem(`FavPokemon`);
+    if (existingValue === null) {
+        existingValue = "";
+    }
+
+    existingValue += `${id}|`;
+    localStorage.setItem(`FavPokemon`, existingValue);
+}
+
+function AlreadySaved(id) {
+    let existingValue = localStorage.getItem(`FavPokemon`);
+    if (existingValue === null) {
+        existingValue = "";
+    }
+
+    const savedIds = existingValue.split("|");
+    if (savedIds.includes(id.toString())) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function loadPokemon() {
+    const resultsElement = document.getElementById("results");
+    const resultsElement2 = document.getElementById("results2");
+    resultsElement.innerHTML = "";
+    resultsElement2.innerHTML = "";
+
+    const favoritePokemon = localStorage.getItem(`FavPokemon`);
+    if (favoritePokemon === null || favoritePokemon === "") {
+        return;
+    }
+
+    const pokemonIds = favoritePokemon.split("|");
+    for (let i = 0; i < pokemonIds.length - 1; i++) {
+        fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${pokemonIds[i]}`)
+    }
+}
+
+function fetchPokemonData(pokemonUrl) {
+    fetch(pokemonUrl)
+        .then(response => response.json())
+        .then(pokemonData => {
+            createShowcase(pokemonData);
+        })
+        .catch(error => {
+            console.log(`An error occurred while fetching Pokémon data\nError: ${error}`);
+        });
+}
+
+function createShowcase(pokemonData) {
+    const pokemonName = pokemonData.name;
+    const pokemonSprite = pokemonData.sprites.front_default;
+    const pokemonId = pokemonData.id;
+    const resultsElement = document.getElementById('results');
+
+    const pokemonDiv = document.createElement('div');
+    pokemonDiv.id = `pokemon${pokemonId}`;
+
+    const nameElement = document.createElement('h2');
+    nameElement.textContent = pokemonName;
+
+    const spriteElement = document.createElement('img');
+    spriteElement.src = pokemonSprite;
+    spriteElement.alt = pokemonName;
+    spriteElement.classList.add('cursorChange');
+
+    spriteElement.addEventListener('click', function () {
+        // resultsElement.innerHTML = '';
+        getPokemon(pokemonName);
+    });
+
+    pokemonDiv.appendChild(nameElement);
+    pokemonDiv.appendChild(spriteElement);
+
+    resultsElement.appendChild(pokemonDiv);
+    resultsElement.classList.remove('infographic');
+    resultsElement.classList.add('showcase');
+}
+
+/*
 function createStatGraph(statsData, chosenDiv) {
     const statNameMap = {
         "hp": "HP",
@@ -225,6 +322,7 @@ function createStatGraph(statsData, chosenDiv) {
         }
     });
 }
+*/
 
 function ApplyStyles(infoMap) {
     const results = document.getElementById("results");
@@ -234,3 +332,4 @@ function ApplyStyles(infoMap) {
     const battleSectionDiv = document.querySelector('.battleSection');
     const graphicsSectionDiv = document.querySelector('.graphicsSection');
 }
+

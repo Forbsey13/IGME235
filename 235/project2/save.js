@@ -1,4 +1,4 @@
-const storageButton = document.querySelector("#favorite");
+const storageButton = document.querySelector("#save");
 storageButton.addEventListener("click", function () {
     loadSavedPokemon();
 });
