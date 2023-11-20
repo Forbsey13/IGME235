@@ -18,6 +18,13 @@ searchInput.addEventListener("keydown", function (event) {
     }
 });
 
+const randomizerButton = document.getElementById('randomizer');
+randomizerButton.addEventListener('click', function () {
+    clearResults("results");
+    clearResults("results2");
+    getPokemonData();
+}); 
+
 document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("FavPokemon", "");
 });
@@ -65,7 +72,7 @@ async function getPokemon(pokemon, correctDiv) {
             const poke_response = await fetch(`${poke_URL}${dexNumber}`);
             if (poke_response.ok) {
                 const poke_data = await poke_response.json();
-                clearResults("results","results2");
+                clearResults(correctDiv);
                 const pokemonInfo = getPokemonInfo(poke_data);
                 const speciesInfo = getSpeciesInfo(pokeSpecies_data);
                 createInfographic(pokemonInfo, speciesInfo, correctDiv);
@@ -81,9 +88,9 @@ async function getPokemon(pokemon, correctDiv) {
     }
 }
 
-function clearResults(chosenDiv,otherDiv) {
+function clearResults(chosenDiv) {
     const results = document.getElementById(chosenDiv);
-    const results2 = document.getElementById(otherDiv);
+    //const results2 = document.getElementById(otherDiv);
 
     if (results) {
         const existingCanvas = results.querySelector("canvas");
@@ -93,7 +100,7 @@ function clearResults(chosenDiv,otherDiv) {
     }
 
     results.innerHTML = "";
-    results2.innerHTML = "";
+    //results2.innerHTML = "";
 }
 
 function getPokemonInfo(data) {
@@ -130,21 +137,9 @@ function getSpeciesInfo(data) {
     return pokemonMap;
 }
 
-function tempStats(response) {
-    let pokeStats = document.querySelector("#pokeStats");
-    pokeStats.innerHTML = "Base Stats:<br>";
-    response.stats.forEach(stat => {
-        pokeStats.innerHTML += '${stat.stat.name}: ${stat.base_stat}<br>';
-    });
-}
-
 function createInfographic(pokeMap, speciesMap, chosenDiv) {
-    console.log(chosenDiv);
 
     const results = document.getElementById(chosenDiv);
-
-    console.log(results);
-
     const infoMap = new Map([...pokeMap, ...speciesMap]);
 
     results.classList.add('infographic');
@@ -170,9 +165,6 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         results.appendChild(element);
     });
 
-    // createStatGraph(infoMap.get("Stats"),chosenDiv);
-    // tempStats(infoMap.get("Stats"));
-
     // Save Pokemon
     let saveButton = document.createElement("button");
     saveButton.id = "save";
@@ -182,6 +174,16 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
     saveButton.addEventListener("click", function () {
         savePokemon(infoMap.get("Id"));
     });
+
+    results.style.backgroundColor = infoMap.get("Color");
+    newBackColor = colorNameToRGB(results.style.backgroundColor);
+    if (newBackColor.r < 50 &&  newBackColor.g < 50 && newBackColor.b < 50)
+    {
+        results.style.color = "white";
+    }
+    else{
+        results.style.color = "black";
+    }
 }
 
 function savePokemon(id) {
@@ -237,7 +239,7 @@ function fetchPokemonData(pokemonUrl) {
             createShowcase(pokemonData);
         })
         .catch(error => {
-            console.log(`An error occurred while fetching Pokémon data\nError: ${error}`);
+            console.log(`An error occurred while fetching PokÃ©mon data\nError: ${error}`);
         });
 }
 
@@ -259,8 +261,8 @@ function createShowcase(pokemonData) {
     spriteElement.classList.add('cursorChange');
 
     spriteElement.addEventListener('click', function () {
-        // resultsElement.innerHTML = '';
-        getPokemon(pokemonName);
+        resultsElement.innerHTML = '';
+        getPokemon(pokemonName, "results");
     });
 
     pokemonDiv.appendChild(nameElement);
@@ -271,65 +273,25 @@ function createShowcase(pokemonData) {
     resultsElement.classList.add('showcase');
 }
 
-/*
-function createStatGraph(statsData, chosenDiv) {
-    const statNameMap = {
-        "hp": "HP",
-        "attack": "Atk",
-        "defense": "Def",
-        "special-attack": "SpA",
-        "special-defense": "SpD",
-        "speed": "Spe"
+function getPokemonData() {
+    const getRandomPokemonId = () => Math.floor(Math.random() * 1015) + 1;
+    const getRandomPokemonId2 = () => Math.floor(Math.random() * 1015) + 1;
+
+    getPokemon(getRandomPokemonId(), "results");
+    getPokemon(getRandomPokemonId2(), "results2");
+}
+
+function colorNameToRGB(colorName) {
+    var tempElem = document.createElement('div');
+    tempElem.style.color = colorName;
+    document.body.appendChild(tempElem);
+    var rgbColor = window.getComputedStyle(tempElem).color;
+    document.body.removeChild(tempElem);
+    var rgbValues = rgbColor.match(/\d+/g);
+
+    return {
+        r: parseInt(rgbValues[0]),
+        g: parseInt(rgbValues[1]),
+        b: parseInt(rgbValues[2])
     };
-
-    if (statGraph) {
-        statGraph.destroy();
-    }
-
-    let labels = statsData.map(stat => statNameMap[stat.stat.name]);
-    let values = statsData.map(stat => stat.base_stat);
-
-    const results = document.getElementById(chosenDiv);
-
-    let div = document.createElement("div");
-    div.id = "stats";
-    let canvas = document.createElement("canvas");
-    canvas.id = "statChart";
-    results.appendChild(div);
-    div.appendChild(canvas);
-
-    let ctx = canvas.getContext("2d");
-    statGraph = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Base Stats',
-                data: values,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 }
-*/
-
-function ApplyStyles(infoMap) {
-    const results = document.getElementById("results");
-    const infoSectionDiv = document.querySelector('.infoSection');
-    const titleSectionDiv = document.querySelector('.titleSection');
-    const aboutSectionDiv = document.querySelector('.aboutSection');
-    const battleSectionDiv = document.querySelector('.battleSection');
-    const graphicsSectionDiv = document.querySelector('.graphicsSection');
-}
-

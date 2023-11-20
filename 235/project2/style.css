@@ -6,9 +6,9 @@ header{
     display: grid;
     grid-template-areas: 
     "head head head"
-    ". vs ."
+    /* ". vs ." */
     "st1 vs st2"
-    ". vs ."
+    /* ". vs ." */
     "press press press";
     /* margin: 1% 6%; */
     text-align: center;
@@ -19,24 +19,31 @@ header{
     margin-bottom: 3%;
 }
 input {
-    width: 70%;
+    /* width: 70%; */
     height: auto;
     text-align: center;
 }
 #searchterm {
     grid-area: st1;
+    width: 10vw;
+    height: 6vh;
+    border-radius: 3px;
+    text-align: center;
 }
 #searchterm2{
     grid-area: st2;
+    width: 10vw;
+    height: 6vh;
+    border-radius: 3px;
+    text-align: center;
 }
 button:hover {
     box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 10px 50px 0 rgba(0,0,0,0.19);
 }
-#VS img {
+#VS {
     grid-area: vs;
     text-align: center;
-    /* font-size: 6vh; */
-    margin: -5%;
+    margin-top: -3vh;
     width: 50%;
     height: auto;
 }
@@ -81,6 +88,11 @@ button:hover {
 }
 #results {
     grid-area: r1;
+    display: block;
+    background-color: lightgray;
+    border-radius: 30px;
+    padding-left: 5%;
+    text-align: center;
 }
 #theMatchup {
     grid-area: TMup;
@@ -91,6 +103,20 @@ button:hover {
 #results2 {
     grid-area: r2;
     text-align: right;
+    background-color: gray;
+    border-radius: 30px;
+    padding-right: 5%;
+    text-align: center;
+}
+#save{
+    top: 50%;
+    left: 50%;
+    width: 7vw;
+    height: 3vh;
+    border-radius: 20px;
+}
+#save:hover {
+    background-color: gray;
 }
 
 #pokemans img {
@@ -100,4 +126,10 @@ button:hover {
 
 footer {
     text-align: center;
+}
+h2 {
+    text-align: center;
+}
+.pokemonDiv img{
+    padding: 30%;
 }
