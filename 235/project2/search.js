@@ -76,7 +76,6 @@ async function getPokemon(pokemon, correctDiv) {
                 const pokemonInfo = getPokemonInfo(poke_data);
                 const speciesInfo = getSpeciesInfo(pokeSpecies_data);
                 createInfographic(pokemonInfo, speciesInfo, correctDiv);
-
             } else {
                 console.log(`An error occurred trying to fetch data from ${poke_URL}`);
             }
@@ -155,6 +154,7 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         { type: "p", key: "Height", prefix: "Height: " },
     ];
 
+    //Image plus info
     elementTypes.forEach(({ type, key, prefix = "" }) => {
         const element = document.createElement(type);
         if (type === "img") {
@@ -175,6 +175,7 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
         savePokemon(infoMap.get("Id"));
     });
 
+    //Background Color
     results.style.backgroundColor = infoMap.get("Color");
     newBackColor = colorNameToRGB(results.style.backgroundColor);
     if (newBackColor.r < 50 &&  newBackColor.g < 50 && newBackColor.b < 50)
@@ -295,3 +296,9 @@ function colorNameToRGB(colorName) {
         b: parseInt(rgbValues[2])
     };
 }
+
+/*
+function checkPokemonMatchup(pokeType1,pokeType2){
+
+}
+*/
