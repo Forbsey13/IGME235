@@ -249,6 +249,8 @@ function createShowcase(pokemonData) {
     const pokemonSprite = pokemonData.sprites.front_default;
     const pokemonId = pokemonData.id;
     const resultsElement = document.getElementById('results');
+    const resultsElement2 = document.getElementById('results2');
+    
 
     const pokemonDiv = document.createElement('div');
     pokemonDiv.id = `pokemon${pokemonId}`;
@@ -271,7 +273,8 @@ function createShowcase(pokemonData) {
 
     resultsElement.appendChild(pokemonDiv);
     resultsElement.classList.remove('infographic');
-    resultsElement.classList.add('showcase');
+    resultsElement.classList.add('showcase')
+    resultsElement2.innerHTML = "";
 }
 
 function getPokemonData() {
