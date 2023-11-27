@@ -106,7 +106,7 @@ button:hover {
 
 #pokemans {
     display: grid;
-    grid-template-areas: "r1 TMup r2";
+    grid-template-areas: "r1 r2";
 }
 #results {
     grid-area: r1;
@@ -115,12 +115,6 @@ button:hover {
     border-radius: 30px;
     padding-left: 5%;
     text-align: center;
-}
-#theMatchup {
-    grid-area: TMup;
-    display: flex;
-    justify-content: center;
-    /* margin-top: 70%; */
 }
 #results2 {
     grid-area: r2;
@@ -131,11 +125,11 @@ button:hover {
     text-align: center;
 }
 #save{
-    top: 50%;
-    left: 50%;
-    width: 7vw;
-    height: 3vh;
+    width: 8vw;
+    height: 4vh;
     border-radius: 20px;
+    text-align: center;
+    align-items: center;
 }
 #save:hover {
     background-color: gray;
@@ -146,12 +140,19 @@ button:hover {
     height: auto;
 }
 
-footer {
-    text-align: center;
-}
-h2 {
-    text-align: center;
-}
 .pokemonDiv img{
     padding: 30%;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+}
+
+.addCursor {
+    cursor: pointer;
 }

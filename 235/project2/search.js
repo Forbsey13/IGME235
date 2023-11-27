@@ -7,8 +7,10 @@ let pokeColor;
 const searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
     const resultsElement = document.getElementById("results");
+    const pokemans = document.getElementById('pokemans');
     resultsElement.innerHTML = "";
     handleSearch();
+    pokemans.style.gridTemplateAreas = "r1 r2";
 });
 
 const searchInput = document.querySelector("#searchterm");
@@ -20,9 +22,12 @@ searchInput.addEventListener("keydown", function (event) {
 
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
+    // const resultsElement = document.getElementById("results");
+    const pokemans = document.getElementById('pokemans');
     clearResults("results");
     clearResults("results2");
     getPokemonData();
+    pokemans.style.gridTemplateAreas = "r1 r2";
 }); 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -139,6 +144,7 @@ function getSpeciesInfo(data) {
 function createInfographic(pokeMap, speciesMap, chosenDiv) {
 
     const results = document.getElementById(chosenDiv);
+    results.style.display = "block";
     const infoMap = new Map([...pokeMap, ...speciesMap]);
 
     results.classList.add('infographic');
@@ -221,6 +227,7 @@ function loadPokemon() {
     const resultsElement2 = document.getElementById("results2");
     resultsElement.innerHTML = "";
     resultsElement2.innerHTML = "";
+    resultsElement2.style.display = "flex";
 
     const favoritePokemon = localStorage.getItem(`FavPokemon`);
     if (favoritePokemon === null || favoritePokemon === "") {
@@ -250,9 +257,10 @@ function createShowcase(pokemonData) {
     const pokemonId = pokemonData.id;
     const resultsElement = document.getElementById('results');
     const resultsElement2 = document.getElementById('results2');
+    const pokemans = document.getElementById('pokemans');
     
-
     const pokemonDiv = document.createElement('div');
+    pokemonDiv.classList.add('addCursor')
     pokemonDiv.id = `pokemon${pokemonId}`;
 
     const nameElement = document.createElement('h2');
@@ -273,8 +281,12 @@ function createShowcase(pokemonData) {
 
     resultsElement.appendChild(pokemonDiv);
     resultsElement.classList.remove('infographic');
-    resultsElement.classList.add('showcase')
-    resultsElement2.innerHTML = "";
+    resultsElement.classList.add('showcase');
+    // resultsElement.classList.add('centered');
+    // resultsElement.style.display = "flex";
+    // resultsElement.style.justifyContent = "center";
+    pokemans.style.gridTemplateAreas = "r1 r1";
+    resultsElement2.style.display = "none";
 }
 
 function getPokemonData() {
@@ -299,9 +311,3 @@ function colorNameToRGB(colorName) {
         b: parseInt(rgbValues[2])
     };
 }
-
-/*
-function checkPokemonMatchup(pokeType1,pokeType2){
-
-}
-*/
