@@ -1,9 +1,11 @@
+//API calls and variables
 const poke_URL = "https://pokeapi.co/api/v2/pokemon/";
 const pokeSpecies_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let statGraph = null;
 let dexNumber;
 let pokeColor;
 
+//Button to start the search
 const searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
     const resultsElement = document.getElementById("results");
@@ -13,6 +15,7 @@ searchButton.addEventListener("click", function () {
     pokemans.style.gridTemplateAreas = "r1 r2";
 });
 
+//The textbox for searches
 const searchInput = document.querySelector("#searchterm");
 searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
@@ -20,9 +23,9 @@ searchInput.addEventListener("keydown", function (event) {
     }
 });
 
+//Randomizing Button
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
-    // const resultsElement = document.getElementById("results");
     const pokemans = document.getElementById('pokemans');
     clearResults("results");
     clearResults("results2");
@@ -30,15 +33,18 @@ randomizerButton.addEventListener('click', function () {
     pokemans.style.gridTemplateAreas = "r1 r2";
 }); 
 
-document.addEventListener("DOMContentLoaded", function () {
+//Saving Pokemon
+document.addEventListener("ContentLoaded", function () {
     localStorage.setItem("FavPokemon", "");
 });
 
+//Button for loading saved pokemon
 const storageButton = document.querySelector("#load");
 storageButton.addEventListener("click", function () {
     loadPokemon();
 });
 
+//Recieve Search input
 function handleSearch() {
     const search1 = document.querySelector("#searchterm");
     const search2 = document.querySelector("#searchterm2");
@@ -49,52 +55,37 @@ function handleSearch() {
         pkm1 = term1.toLowerCase();
         pkm2 = term2.toLowerCase();
 
+        //Send pokemon name to recieve info
         getPokemon(pkm1, "results");
         getPokemon(pkm2, "results2");
     }
-    else if (search1 == "") {
-        console.log(`An error occurred trying to fetch search 1 data from ${poke_URL}`);
-    }
-    else if (search2 == "") {
-        console.log(`An error occurred trying to fetch search 2 data from ${poke_URL}`);
-    }
-    else {
-        console.log(`An error occurred trying to fetch both search data from ${poke_URL}`);
-    }
 }
 
+//consistent string formattting
 function formatString(str) {
     return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
+//Main Function
 async function getPokemon(pokemon, correctDiv) {
-    try {
-        const pokeSpecies_response = await fetch(`${pokeSpecies_URL}${pokemon}`);
-        if (pokeSpecies_response.ok) {
-            const pokeSpecies_data = await pokeSpecies_response.json();
-            dexNumber = pokeSpecies_data.id;
+    const pokeSpecies_response = await fetch(`${pokeSpecies_URL}${pokemon}`);
+    if (pokeSpecies_response.ok) {
+        const pokeSpecies_data = await pokeSpecies_response.json();
+        dexNumber = pokeSpecies_data.id;
 
-            const poke_response = await fetch(`${poke_URL}${dexNumber}`);
-            if (poke_response.ok) {
-                const poke_data = await poke_response.json();
-                clearResults(correctDiv);
-                const pokemonInfo = getPokemonInfo(poke_data);
-                const speciesInfo = getSpeciesInfo(pokeSpecies_data);
-                createInfographic(pokemonInfo, speciesInfo, correctDiv);
-            } else {
-                console.log(`An error occurred trying to fetch data from ${poke_URL}`);
-            }
-        } else {
-            console.log(`An error occurred trying to fetch data from ${pokeSpecies_URL}`);
+        const poke_response = await fetch(`${poke_URL}${dexNumber}`);
+        if (poke_response.ok) {
+            const poke_data = await poke_response.json();
+            clearResults(correctDiv);
+            const pokemonInfo = getPokemonInfo(poke_data);              //Recieve Main Info
+            const speciesInfo = getSpeciesInfo(pokeSpecies_data);       //Recieve Egg Info
+            createInfographic(pokemonInfo, speciesInfo, correctDiv);
         }
-    } catch (error) {
-        console.log(`An error occurred during getPokemon()\nError: ${error}`);
     }
 }
 
 function clearResults(chosenDiv) {
     const results = document.getElementById(chosenDiv);
-    //const results2 = document.getElementById(otherDiv);
 
     if (results) {
         const existingCanvas = results.querySelector("canvas");
@@ -104,9 +95,9 @@ function clearResults(chosenDiv) {
     }
 
     results.innerHTML = "";
-    //results2.innerHTML = "";
 }
 
+//Most of pokemons info
 function getPokemonInfo(data) {
     const pokemonMap = new Map([
         ['Name', formatString(data.name)],
@@ -132,6 +123,7 @@ function getPokemonInfo(data) {
     return pokemonMap;
 }
 
+//Egg + Color Info
 function getSpeciesInfo(data) {
     const pokemonMap = new Map([
         ['Color', formatString(data.color.name)],
@@ -141,8 +133,9 @@ function getSpeciesInfo(data) {
     return pokemonMap;
 }
 
+//Put Together info to display
 function createInfographic(pokeMap, speciesMap, chosenDiv) {
-
+    //Set up display variables
     const results = document.getElementById(chosenDiv);
     results.style.display = "block";
     const infoMap = new Map([...pokeMap, ...speciesMap]);
@@ -193,6 +186,7 @@ function createInfographic(pokeMap, speciesMap, chosenDiv) {
     }
 }
 
+//Saving Pokemon
 function savePokemon(id) {
     if (AlreadySaved(id)) {
         alert("This Pokemon is already saved!");
@@ -208,6 +202,7 @@ function savePokemon(id) {
     localStorage.setItem(`FavPokemon`, existingValue);
 }
 
+//Search Storage for already saved pokemon
 function AlreadySaved(id) {
     let existingValue = localStorage.getItem(`FavPokemon`);
     if (existingValue === null) {
@@ -222,6 +217,7 @@ function AlreadySaved(id) {
     }
 }
 
+//Setting up the pokemon that were favorited to view
 function loadPokemon() {
     const resultsElement = document.getElementById("results");
     const resultsElement2 = document.getElementById("results2");
@@ -240,17 +236,17 @@ function loadPokemon() {
     }
 }
 
+//Fetch Pokemon to create mini showcase
 function fetchPokemonData(pokemonUrl) {
     fetch(pokemonUrl)
         .then(response => response.json())
         .then(pokemonData => {
             createShowcase(pokemonData);
-        })
-        .catch(error => {
-            console.log(`An error occurred while fetching PokÃ©mon data\nError: ${error}`);
-        });
+    });
 }
 
+//Make mini pokemon showcase the user can select from
+//Add name and image into the area
 function createShowcase(pokemonData) {
     const pokemonName = pokemonData.name;
     const pokemonSprite = pokemonData.sprites.front_default;
@@ -271,6 +267,7 @@ function createShowcase(pokemonData) {
     spriteElement.alt = pokemonName;
     spriteElement.classList.add('cursorChange');
 
+    //Click Pokemon Button
     spriteElement.addEventListener('click', function () {
         resultsElement.innerHTML = '';
         getPokemon(pokemonName, "results");
@@ -279,16 +276,15 @@ function createShowcase(pokemonData) {
     pokemonDiv.appendChild(nameElement);
     pokemonDiv.appendChild(spriteElement);
 
+    //Styling
     resultsElement.appendChild(pokemonDiv);
     resultsElement.classList.remove('infographic');
     resultsElement.classList.add('showcase');
-    // resultsElement.classList.add('centered');
-    // resultsElement.style.display = "flex";
-    // resultsElement.style.justifyContent = "center";
     pokemans.style.gridTemplateAreas = "r1 r1";
     resultsElement2.style.display = "none";
 }
 
+//Randomized Pokemon Retriever
 function getPokemonData() {
     const getRandomPokemonId = () => Math.floor(Math.random() * 1015) + 1;
     const getRandomPokemonId2 = () => Math.floor(Math.random() * 1015) + 1;
@@ -297,6 +293,7 @@ function getPokemonData() {
     getPokemon(getRandomPokemonId2(), "results2");
 }
 
+//Changing name/hex to rgb to change background to pokemon color
 function colorNameToRGB(colorName) {
     var tempElem = document.createElement('div');
     tempElem.style.color = colorName;

@@ -11,9 +11,7 @@ header{
     display: grid;
     grid-template-areas: 
     "head head head"
-    /* ". vs ." */
     "sA sA sA"
-    /* ". vs ." */
     "press press press";
     text-align: center;
 }
@@ -23,7 +21,6 @@ header{
     margin-bottom: 5%;
 }
 input {
-    /* width: 70%; */
     height: auto;
     text-align: center;
 }
