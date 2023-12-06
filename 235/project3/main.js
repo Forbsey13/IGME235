@@ -56,17 +56,22 @@ class SceneManaging {
         title.y = 200;
         this.addToScene('main', title);
 
-        const startButton = createButton(300, 75, 'Start', 30, `./media/icons/Play.png`, 40, 400, () => {
+        /*
+        let titleImage = new Image(300,300)
+        this.addToScene('main',titleImage);
+        */
+
+        const startButton = createButton(300, 75, 'Start', 30, `images/playButton.png`, 40, 400, () => {
             this.GameScene();
         });
         this.addToScene('main', startButton);
 
-        const instructionButton = createButton(300, 75, 'Instruction', 30, `./media/icons/Instruction.png`, 40, 500, () => {
+        const instructionButton = createButton(300, 75, 'Instruction', 30, `images/instructions.png`, 40, 500, () => {
             this.InstructionScene();
         });
         this.addToScene('main', instructionButton);
 
-        const settingsButton = createButton(300, 75, 'Settings', 30, `./media/icons/Gear.png`, 40, 600, () => {
+        const settingsButton = createButton(300, 75, 'Settings', 30, `images/settings.png`, 40, 600, () => {
             this.SettingsScene();
         });
         this.addToScene('main', settingsButton);
@@ -88,42 +93,42 @@ class SceneManaging {
         scoreText.y = 20;
         this.addToScene('game', scoreText);
 
-        const fruitNames = ['Apple', 'Banana', 'Cherry', 'Grape', 'Mango', 'Orange', 'Strawberry', 'Watermelon'];
-        const fruitSprites = [];
+        const trashNames = ['PopUpAd', 'trash', 'trashcan', 'recycleBag', 'eatenApple'];
+        const trashSprites = [];
 
-        fruitNames.forEach((fruitName) => {
-            const path = `./media/fruits/${fruitName}.png`;
-            const fruitSprite = PIXI.Sprite.from(path);
+        trashNames.forEach((trashName) => {
+            const path = `./images/trashs/${trashName}.png`;
+            const trashSprite = PIXI.Sprite.from(path);
 
-            if (fruitName === 'Watermelon') { fruitSprite.scale.set(2, 2); }
+            if (trashName === 'Watermelon') { trashSprite.scale.set(2, 2); }
 
-            fruitSprite.visible = false;
-            fruitSprites.push(fruitSprite);
+            trashSprite.visible = false;
+            trashSprites.push(trashSprite);
 
-            this.addToScene('game', fruitSprite);
+            this.addToScene('game', trashSprite);
         });
 
         const ticker = new PIXI.Ticker();
         ticker.add(() => {
-            fruitSprites.forEach((fruitSprite) => {
-                if (fruitSprite.visible) {
-                    fruitSprite.y += 2;
+            trashSprites.forEach((trashSprite) => {
+                if (trashSprite.visible) {
+                    trashSprite.y += 2;
 
-                    if (fruitSprite.y > this.app.screen.height) {
-                        fruitSprite.y = -fruitSprite.height;
-                        fruitSprite.x = Math.random() * (this.app.screen.width - fruitSprite.width);
+                    if (trashSprite.y > this.app.screen.height) {
+                        trashSprite.y = -trashSprite.height;
+                        trashSprite.x = Math.random() * (this.app.screen.width - trashSprite.width);
                     }
 
                     const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
-                    if (this.hitTestRectangle(mousePosition, fruitSprite)) {
-                        fruitSprite.visible = false;
+                    if (this.hitTestRectangle(mousePosition, trashSprite)) {
+                        trashSprite.visible = false;
                         score += 10;
                         scoreText.text = `Score: ${score}`;
                     }
                 } else {
                     if (Math.random() < 0.02) {
-                        fruitSprite.visible = true;
-                        fruitSprite.x = Math.random() * (this.app.screen.width - fruitSprite.width);
+                        trashSprite.visible = true;
+                        trashSprite.x = Math.random() * (this.app.screen.width - trashSprite.width);
                     }
                 }
             });
