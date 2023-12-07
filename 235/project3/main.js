@@ -51,15 +51,18 @@ class SceneManaging {
     }
 
     MainScene() {
-        const title = new PIXI.Text('Cursor In Danger', { fontSize: 70, fill: 'white' });
+        const title = new PIXI.Text('Cursor In Danger', { fontSize: 70, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
         title.x = this.app.screen.width / 2 - title.width / 2;
         title.y = 200;
         this.addToScene('main', title);
 
-        /*
-        let titleImage = new Image(300,300)
-        this.addToScene('main',titleImage);
-        */
+        const titleImage = new PIXI.Sprite.from('images/cursorMain.png');
+        titleImage.x = -30;
+        titleImage.y = 50;
+        titleImage.width = 700;
+        titleImage.height = 700;
+        this.addToScene('main', titleImage);
+
 
         const startButton = createButton(300, 75, 'Start', 30, `images/playButton.png`, 40, 400, () => {
             this.GameScene();
@@ -87,20 +90,32 @@ class SceneManaging {
         }, 20, 'true');
         this.addToScene('game', backButton);
 
+        let lives = 10;
+        const livesText = new PIXI.Text(`Lives: ${lives}`, { fontSize: 20, fill: 'white' });
+        livesText.x = this.app.screen.width - livesText.width - 20;
+        livesText.y = 20;
+        this.addToScene('game', livesText);
+
         let score = 0;
         const scoreText = new PIXI.Text(`Score: ${score}`, { fontSize: 20, fill: 'white' });
-        scoreText.x = this.app.screen.width - scoreText.width - 20;
+        scoreText.x = this.app.screen.width - scoreText.width - 125;
         scoreText.y = 20;
         this.addToScene('game', scoreText);
 
-        const trashNames = ['PopUpAd', 'trash', 'trashcan', 'recycleBag', 'eatenApple'];
+        const trashNames = ['PopUpAd', 'trash', 'trashcan', 'recycleBag', 'eatenApple', 'webCookie', 'deadFish'];
         const trashSprites = [];
 
         trashNames.forEach((trashName) => {
-            const path = `./images/trashs/${trashName}.png`;
+            const path = `./images/trash/${trashName}.png`;
             const trashSprite = PIXI.Sprite.from(path);
 
-            if (trashName === 'Watermelon') { trashSprite.scale.set(2, 2); }
+            if (trashName === 'PopUpAd') { trashSprite.scale.set(.3, .3); }
+            if (trashName === 'trash') { trashSprite.scale.set(3, 3); }
+            if (trashName === 'trashcan') { trashSprite.scale.set(3, 3); }
+            if (trashName === 'recycleBag') { trashSprite.scale.set(.1, .1); }
+            if (trashName === 'eatenApple') { trashSprite.scale.set(.25, .25); }
+            if (trashName === 'webCookie') { trashSprite.scale.set(.25, .25); }
+            if (trashName === 'deadFish') { trashSprite.scale.set(.1, .1); }
 
             trashSprite.visible = false;
             trashSprites.push(trashSprite);
@@ -112,23 +127,33 @@ class SceneManaging {
         ticker.add(() => {
             trashSprites.forEach((trashSprite) => {
                 if (trashSprite.visible) {
-                    trashSprite.y += 2;
+                    trashSprite.x -= 2;
+                    trashSprite.anchor.set(.5, .5);
+                    trashSprite.rotation -= .05;
 
-                    if (trashSprite.y > this.app.screen.height) {
-                        trashSprite.y = -trashSprite.height;
-                        trashSprite.x = Math.random() * (this.app.screen.width - trashSprite.width);
+                    if (trashSprite.x + trashSprite.width < 0) {
+                        trashSprite.x = this.app.screen.width;
+                        trashSprite.y = Math.random() * (this.app.screen.height - trashSprite.height);
+
+                        score++;
+                        scoreText.text = `Score: ${score}`;
                     }
 
                     const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
                     if (this.hitTestRectangle(mousePosition, trashSprite)) {
                         trashSprite.visible = false;
-                        score += 10;
-                        scoreText.text = `Score: ${score}`;
+                        lives--;
+                        livesText.text = `Lives: ${lives}`;
+
+                        if (lives == 0) {
+                            this.GameOverScene();
+                        }
                     }
                 } else {
-                    if (Math.random() < 0.02) {
+                    if (Math.random() < 0.015) {
                         trashSprite.visible = true;
-                        trashSprite.x = Math.random() * (this.app.screen.width - trashSprite.width);
+                        trashSprite.x = this.app.screen.width;
+                        trashSprite.y = Math.random() * (this.app.screen.height - trashSprite.height);
                     }
                 }
             });
@@ -141,11 +166,13 @@ class SceneManaging {
     GameOverScene() {
         const backButton = createButton(40, 40, '', 20, `images/WhiteHomeIcon.png`, 20, 20, () => {
             this.MainScene();
-        }, 20, 'true');
+        }, 20);
         this.addToScene('gameOver', backButton);
 
-        // Retry and Main Menu buttons
-        // Display the score
+        const text = new PIXI.Text('Game Over', { fontSize: 100, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
+        text.x = this.app.screen.width / 2 - text.width / 2;
+        text.y = this.app.screen.height / 2 - text.height / 2;
+        this.addToScene('gameOver', text);
 
         this.switchToScene('gameOver');
     }
@@ -153,13 +180,23 @@ class SceneManaging {
     InstructionScene() {
         const backButton = createButton(40, 40, '', 20, `images/WhiteHomeIcon.png`, 20, 20, () => {
             this.MainScene();
-        }, 20, 'true');
+        }, 20);
         this.addToScene('instruction', backButton);
 
-        const text = new PIXI.Text('How to Play', { fontSize: 50, fill: 'white' });
+        const text = new PIXI.Text('Dodge To Victory', { fontSize: 110, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
         text.x = this.app.screen.width / 2 - text.width / 2;
-        text.y = 200;
+        text.y = 180;
         this.addToScene('instruction', text);
+
+        const text1 = new PIXI.Text('Move the Mouse to Avoid the Garbage!', { fontSize: 50, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
+        text1.x = this.app.screen.width / 2 - text1.width / 2;
+        text1.y = 380;
+        this.addToScene('instruction', text1);
+
+        const text2 = new PIXI.Text('You can take 10 hits before its game over!', { fontSize: 50, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
+        text2.x = this.app.screen.width / 2 - text2.width / 2;
+        text2.y = 460;
+        this.addToScene('instruction', text2);
 
         this.switchToScene('instruction');
     }
@@ -167,8 +204,15 @@ class SceneManaging {
     SettingsScene() {
         const backButton = createButton(40, 40, '', 20, `images/WhiteHomeIcon.png`, 20, 20, () => {
             this.MainScene();
-        }, 20, 'true');
+        }, 20);
         this.addToScene('settings', backButton);
+
+        const text1 = new PIXI.Text('Adjust Audio', { fontSize: 50, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
+        text1.x = this.app.screen.width / 2 - text1.width / 2;
+        text1.y = 250;
+        this.addToScene('settings', text1);
+
+        //Add Audio Muting/Volume change
 
         this.switchToScene('settings');
     }
@@ -186,6 +230,7 @@ class SceneManaging {
 const sceneManaging = new SceneManaging(app);
 sceneManaging.MainScene();
 
+/*
 playBackgroundMusic();
 
 async function playBackgroundMusic() {
@@ -200,8 +245,9 @@ async function playBackgroundMusic() {
         console.error('Error playing background music:', error.message);
     }
 }
+*/
 
-function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconSize, y, onClick, x = null, isBackButton) {
+function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconSize, y, onClick, x = null) {
     const button = new PIXI.Container();
 
     const buttonBg = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -210,7 +256,7 @@ function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconS
     buttonBg.tint = 0x555555;
     button.addChild(buttonBg);
 
-    const buttonText = new PIXI.Text(text, { fontSize: textSize, fill: 'white' });
+    const buttonText = new PIXI.Text(text, { fontSize: textSize, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
     buttonText.x = buttonBg.width / 2 - buttonText.width / 2;
     buttonText.y = buttonBg.height / 2 - buttonText.height / 2;
     button.addChild(buttonText);

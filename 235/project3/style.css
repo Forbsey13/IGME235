@@ -1,14 +1,8 @@
 body {
-    cursor: url(images/move.png) 8 8, crosshair;
     margin: 0px;
     background-color: black;
     color: whitesmoke;
     overflow: hidden;
 
     font-family: 'Nova Square', sans-serif;
-}
-
-main {
-    font-family: 'Nova Square', sans-serif;
-    border-radius: 30px;
 }
