@@ -25,6 +25,13 @@ class SceneManaging {
         this.app.stage.addChild(this.trailGraphics);
     }
 
+    menuSound = new Howl({
+        src: ['Audio/MenuMusic.wav']
+    });
+    gameSound = new Howl({
+        src: ['Audio/GameSound.wav']
+    });
+
     Scenes() {
         for (const sceneKey in this.scenes) {
             this.app.stage.addChild(this.scenes[sceneKey]);
@@ -79,6 +86,7 @@ class SceneManaging {
         });
         this.addToScene('main', settingsButton);
 
+        menuSound.play();
         this.switchToScene('main');
     }
 
@@ -100,27 +108,27 @@ class SceneManaging {
         scoreText.y = 20;
         this.addToScene('game', scoreText);
 
-        const trashNames = ['PopUpAd', 'trash', 'trashcan', 'recycleBag', 'eatenApple', 'webCookie', 'deadFish'];
+        const trashNames = ['PopUpAd', 'trash', 'trashcan', 'recycleBag', 'eatenApple', 'webCookie', 'deadFish', 'bananaPeel'];
         const trashSprites = [];
 
         // if (trashSprites.length != trashNames.length) {
-            trashNames.forEach((trashName) => {
-                const path = `./images/trash/${trashName}.png`;
-                const trashSprite = PIXI.Sprite.from(path);
+        trashNames.forEach((trashName) => {
+            const path = `./images/trash/${trashName}.png`;
+            const trashSprite = PIXI.Sprite.from(path);
 
-                if (trashName === 'PopUpAd') { trashSprite.scale.set(.8, .8); }
-                if (trashName === 'trash') { trashSprite.scale.set(8, 8); }
-                if (trashName === 'trashcan') { trashSprite.scale.set(8, 8); }
-                if (trashName === 'recycleBag') { trashSprite.scale.set(.3, .3); }
-                if (trashName === 'eatenApple') { trashSprite.scale.set(.8, .8); }
-                if (trashName === 'webCookie') { trashSprite.scale.set(.8, .8); }
-                if (trashName === 'deadFish') { trashSprite.scale.set(.3, .3); }
+            // if (trashName === 'PopUpAd') { trashSprite.scale.set(.8, .8); }
+            if (trashName === 'trash') { trashSprite.scale.set(8, 8); }
+            // if (trashName === 'trashcan') { trashSprite.scale.set(8, 8); }
+            if (trashName === 'recycleBag') { trashSprite.scale.set(.5, .5); }
+            // if (trashName === 'eatenApple') { trashSprite.scale.set(1, .8); }
+            // if (trashName === 'webCookie') { trashSprite.scale.set(.8, .8); }
+            if (trashName === 'deadFish') { trashSprite.scale.set(.5, .5); }
 
-                trashSprite.visible = false;
-                trashSprites.push(trashSprite);
+            trashSprite.visible = false;
+            trashSprites.push(trashSprite);
 
-                this.addToScene('game', trashSprite);
-            });
+            this.addToScene('game', trashSprite);
+        });
         // }
 
         const ticker = new PIXI.Ticker();
@@ -159,6 +167,7 @@ class SceneManaging {
             });
         });
 
+        gameSound.play();
         ticker.start();
         this.switchToScene('game');
     }
@@ -285,23 +294,6 @@ class SceneManaging {
 const sceneManaging = new SceneManaging(app);
 sceneManaging.MainScene();
 
-/*
-playBackgroundMusic();
-
-async function playBackgroundMusic() {
-    try {
-        const backgroundMusic = new Howl({
-            src: ['./media/audio/main_bgm.mp3'],
-            loop: true,
-            volume: 0.5,
-        });
-        await backgroundMusic.play();
-    } catch (error) {
-        console.error('Error playing background music:', error.message);
-    }
-}
-*/
-
 function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconSize, y, onClick, x = null) {
     const button = new PIXI.Container();
 
@@ -335,3 +327,44 @@ function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconS
 
     return button;
 }
+
+/*
+async function playBackgroundMusic(lobby) {
+    if (lobby == "Menu") {
+        try {
+            backgroundMusic = new Howl({
+                src: ['Audio/MenuMusic.wav'],
+                loop: true,
+                volume: adjustableData.volume,
+            });
+
+            await backgroundMusic.play();
+
+            adjustableData.onVolumeChange = (newVolume) => {
+                const clampedVolume = Phaser.Math.Clamp(newVolume, 0, 1.0);
+                backgroundMusic.volume(clampedVolume);
+            };
+        } catch (error) {
+            console.error('Error playing background music:', error.message);
+        }
+    }
+    else {
+        try {
+            backgroundMusic = new Howl({
+                src: ['Audio/GameSound.wav'],
+                loop: true,
+                volume: adjustableData.volume,
+            });
+
+            await backgroundMusic.play();
+
+            adjustableData.onVolumeChange = (newVolume) => {
+                const clampedVolume = Phaser.Math.Clamp(newVolume, 0, 1.0);
+                backgroundMusic.volume(clampedVolume);
+            };
+        } catch (error) {
+            console.error('Error playing background music:', error.message);
+        }
+    }
+}
+*/
