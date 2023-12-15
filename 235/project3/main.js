@@ -25,13 +25,6 @@ class SceneManaging {
         this.app.stage.addChild(this.trailGraphics);
     }
 
-    menuSound = new Howl({
-        src: ['Audio/MenuMusic.wav']
-    });
-    gameSound = new Howl({
-        src: ['Audio/GameSound.wav']
-    });
-
     Scenes() {
         for (const sceneKey in this.scenes) {
             this.app.stage.addChild(this.scenes[sceneKey]);
@@ -81,12 +74,6 @@ class SceneManaging {
         });
         this.addToScene('main', instructionButton);
 
-        const settingsButton = createButton(300, 75, 'Settings', 30, `images/settings.png`, 40, 600, () => {
-            this.SettingsScene();
-        });
-        this.addToScene('main', settingsButton);
-
-        menuSound.play();
         this.switchToScene('main');
     }
 
@@ -111,17 +98,12 @@ class SceneManaging {
         const trashNames = ['PopUpAd', 'trash', 'trashcan', 'recycleBag', 'eatenApple', 'webCookie', 'deadFish', 'bananaPeel'];
         const trashSprites = [];
 
-        // if (trashSprites.length != trashNames.length) {
         trashNames.forEach((trashName) => {
             const path = `./images/trash/${trashName}.png`;
             const trashSprite = PIXI.Sprite.from(path);
 
-            // if (trashName === 'PopUpAd') { trashSprite.scale.set(.8, .8); }
             if (trashName === 'trash') { trashSprite.scale.set(8, 8); }
-            // if (trashName === 'trashcan') { trashSprite.scale.set(8, 8); }
             if (trashName === 'recycleBag') { trashSprite.scale.set(.5, .5); }
-            // if (trashName === 'eatenApple') { trashSprite.scale.set(1, .8); }
-            // if (trashName === 'webCookie') { trashSprite.scale.set(.8, .8); }
             if (trashName === 'deadFish') { trashSprite.scale.set(.5, .5); }
 
             trashSprite.visible = false;
@@ -129,15 +111,14 @@ class SceneManaging {
 
             this.addToScene('game', trashSprite);
         });
-        // }
 
         const ticker = new PIXI.Ticker();
         ticker.add(() => {
             trashSprites.forEach((trashSprite) => {
                 if (trashSprite.visible) {
-                    trashSprite.x -= 2;
-                    trashSprite.anchor.set(.5, .5);
-                    trashSprite.rotation -= .02;
+                    trashSprite.x -= 8;
+                    //trashSprite.anchor.set(.5, .5);
+                    //trashSprite.rotation -= .02;
 
                     if (trashSprite.x + trashSprite.width < 0) {
                         trashSprite.x = this.app.screen.width;
@@ -167,7 +148,6 @@ class SceneManaging {
             });
         });
 
-        gameSound.play();
         ticker.start();
         this.switchToScene('game');
     }
@@ -208,77 +188,6 @@ class SceneManaging {
         this.addToScene('instruction', text2);
 
         this.switchToScene('instruction');
-    }
-
-    SettingsScene() {
-        const backButton = createButton(40, 40, '', 20, `images/WhiteHomeIcon.png`, 20, 20, () => {
-            this.MainScene();
-        }, 20);
-        this.addToScene('settings', backButton);
-
-        const text1 = new PIXI.Text('Adjust Audio', { fontSize: 50, fill: 'white', fontFamily: ['Nova Square', 'sans-serif'] });
-        text1.x = this.app.screen.width / 2 - text1.width / 2;
-        text1.y = 250;
-        this.addToScene('settings', text1);
-
-        /*
-        this.createVolume();
-        createVolume() {
-            const numSquares = 10;
-            const squareSize = 32;
-    
-            if (adjustableData.volume === 0) {
-                this.add.image(100, 270, 'SpeakerMute').setOrigin(0.5).setScale(2);
-            }
-            else {
-                this.add.image(100, 270, 'SpeakerOn').setOrigin(0.5).setScale(2);
-            }
-    
-            const volumeText = this.add.text(140, 250, `Volume`, { fontSize: '40px', fill: '#000' });
-    
-            const decreaseButtonBackground = this.add.graphics()
-                .fillStyle(0xfff)
-                .fillRoundedRect(340, 255, 30, 30, 10);
-    
-            const decreaseButton = this.add.text(355, 268, '-', { fontSize: '30px', fill: '#fff' })
-                .setOrigin(0.5)
-                .setInteractive({ useHandCursor: true })
-                .on('pointerdown', () => this.adjustVolume(Math.round((adjustableData.volume - 0.1) * 10) / 10));
-    
-            const increaseButtonBackground = this.add.graphics()
-                .fillStyle(0xfff)
-                .fillRoundedRect(710, 255, 30, 30, 10);
-    
-            const increaseButton = this.add.text(725, 270, '+', { fontSize: '30px', fill: '#fff' })
-                .setOrigin(0.5)
-                .setInteractive({ useHandCursor: true })
-                .on('pointerdown', () => this.adjustVolume(Math.round((adjustableData.volume + 0.1) * 10) / 10));
-    
-            for (let i = 0; i < numSquares; i++) {
-                const x = 380 + i * (squareSize);
-                const isFilled = i < Math.ceil(adjustableData.volume * numSquares);
-    
-                const square = this.add.graphics()
-                    .fillStyle(isFilled ? 0x00ff00 : 0x000000);
-                    .fillRect(x, 253, squareSize, squareSize);
-            }
-    
-            decreaseButtonBackground.setDepth(1);
-            increaseButtonBackground.setDepth(1);
-            decreaseButton.setDepth(2);
-            increaseButton.setDepth(2);
-        }
-
-        adjustVolume(volume) {
-            adjustableData.volume = Phaser.Math.Clamp(volume, 0, 1.0);
-            this.scene.restart();
-    
-            if (backgroundMusic) { backgroundMusic.volume(adjustableData.volume); }
-            if (adjustableData.isAutoSaving) { saveData(); }
-        }
-        */
-
-        this.switchToScene('settings');
     }
 
     hitTestRectangle(point, sprite) {
@@ -327,44 +236,3 @@ function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconS
 
     return button;
 }
-
-/*
-async function playBackgroundMusic(lobby) {
-    if (lobby == "Menu") {
-        try {
-            backgroundMusic = new Howl({
-                src: ['Audio/MenuMusic.wav'],
-                loop: true,
-                volume: adjustableData.volume,
-            });
-
-            await backgroundMusic.play();
-
-            adjustableData.onVolumeChange = (newVolume) => {
-                const clampedVolume = Phaser.Math.Clamp(newVolume, 0, 1.0);
-                backgroundMusic.volume(clampedVolume);
-            };
-        } catch (error) {
-            console.error('Error playing background music:', error.message);
-        }
-    }
-    else {
-        try {
-            backgroundMusic = new Howl({
-                src: ['Audio/GameSound.wav'],
-                loop: true,
-                volume: adjustableData.volume,
-            });
-
-            await backgroundMusic.play();
-
-            adjustableData.onVolumeChange = (newVolume) => {
-                const clampedVolume = Phaser.Math.Clamp(newVolume, 0, 1.0);
-                backgroundMusic.volume(clampedVolume);
-            };
-        } catch (error) {
-            console.error('Error playing background music:', error.message);
-        }
-    }
-}
-*/
